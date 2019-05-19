@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	dropletactions "github.com/connor-cahill/dropletAutomationCLI/dropletActions"
 	"github.com/spf13/cobra"
 )
 
@@ -10,7 +11,11 @@ var SetupDockerCmd = &cobra.Command{
 	Use:   "setupDocker",
 	Short: "Given public IP address of Droplet will setup docker and docker-compose on VPS.",
 	Run: func(cmd *cobra.Command, args []string) {
+		// get authenticated DO Client
 
+		// get droplet public ip address from args
+		dropletIP := args[0]
+		dropletactions.DockerSetup(dropletIP)
 	},
 }
 

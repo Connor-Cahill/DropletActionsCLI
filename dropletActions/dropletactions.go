@@ -2,6 +2,7 @@ package dropletactions
 
 import (
 	"context"
+	"fmt"
 	"os/exec"
 
 	"github.com/digitalocean/godo"
@@ -118,14 +119,31 @@ func Delete(client *godo.Client, ID int) error {
 	return nil
 }
 
+// SSHController controlls
+// where user can ssh
+type SSHController struct {
+	User string
+	IP   string
+}
+
 // DockerSetup runs script to setup docker droplet with
 // docker and docker-compose CLI
 func DockerSetup(ip string) error {
-	cmdStr := "../automationScripts/fresh-docker-droplet.sh " + ip
-	cmd := exec.Command("/bin/bash", cmdStr)
+	cmd := exec.Command("ssh", "root@"+ip+" 'bash -s' < curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh ")
 	err := cmd.Run()
 	if err != nil {
 		return err
 	}
+	return nil
+}
+
+// TestExec is for testing someting
+// TODO: Remove this function it is only for testing
+func TestExec() error {
+	filePath, err := exec.LookPath("fresh-docker-droplet.sh")
+	if err != nil {
+		return err
+	}
+	fmt.Println("PATH: ", filePath)
 	return nil
 }

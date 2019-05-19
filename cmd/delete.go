@@ -5,8 +5,8 @@ import (
 	"log"
 	"strconv"
 
-	"github.com/connor-cahill/dropletAutomationCLI/dockerauth"
 	dropletactions "github.com/connor-cahill/dropletAutomationCLI/dropletActions"
+	"github.com/connor-cahill/dropletAutomationCLI/dropletauth"
 	"github.com/spf13/cobra"
 )
 
@@ -17,7 +17,7 @@ var DeleteCmd = &cobra.Command{
 	Short: "Destroys Digital Ocean Droplet removing it from your accont.",
 	Run: func(cmd *cobra.Command, args []string) {
 		// Get authenticated client to make request
-		client := dockerauth.Auth()
+		client := dropletauth.Auth()
 
 		for _, dropletID := range args {
 			// convert into int id

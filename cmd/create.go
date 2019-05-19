@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/connor-cahill/dropletAutomationCLI/dockerauth"
 	dropletactions "github.com/connor-cahill/dropletAutomationCLI/dropletActions"
+	"github.com/connor-cahill/dropletAutomationCLI/dropletauth"
 	"github.com/spf13/cobra"
 )
 
@@ -17,7 +17,7 @@ var CreateCmd = &cobra.Command{
 	Short: "Creates new Droplet with base Ubuntu image, set to the $5/month plan by default. PARAM: Must enter droplet name as param.",
 	Run: func(cmd *cobra.Command, args []string) {
 		// get authenticated client to make droplet request
-		client := dockerauth.Auth()
+		client := dropletauth.Auth()
 		dropletName := args[0]
 		// creates new droplet and returns ID
 		dropletID, err := dropletactions.Create(client, dropletName)

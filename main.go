@@ -17,7 +17,6 @@ func init() {
 }
 
 func main() {
-
 	// Execute the CLI package
 	// and mount the root command
 	// TODO: how can I pass the client obj to the CLI?
