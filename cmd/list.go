@@ -23,8 +23,17 @@ var ListCmd = &cobra.Command{
 			log.Fatalln("Error listing all Droplet information: ", err)
 		}
 
-		fmt.Println("Here are your droplets: ", droplets)
-
+		for _, droplet := range droplets {
+			fmt.Println("_____________________________________________")
+			fmt.Println("Droplet: ", droplet.Name)
+			fmt.Println("Droplet ID: ", droplet.ID)
+			publicIP, err := droplet.PublicIPv4()
+			if err != nil {
+				log.Fatalln("Error getting droplet information: ", err)
+			}
+			fmt.Println("Droplet IP: ", publicIP)
+		}
+		fmt.Println("_____________________________________________")
 	},
 }
 
