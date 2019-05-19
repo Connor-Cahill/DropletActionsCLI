@@ -2,6 +2,7 @@ package dropletactions
 
 import (
 	"context"
+	"os/exec"
 
 	"github.com/digitalocean/godo"
 )
@@ -99,4 +100,16 @@ func Get(client *godo.Client, id int) (*godo.Droplet, error) {
 	}
 
 	return droplet, nil
+}
+
+// DockerSetup runs script to setup docker droplet with
+// docker and docker-compose CLI
+func DockerSetup(ip string) error {
+	cmdStr := "../automationScripts/fresh-docker-droplet.sh " + ip
+	cmd := exec.Command("/bin/bash", cmdStr)
+	err := cmd.Run()
+	if err != nil {
+		return err
+	}
+	return nil
 }
