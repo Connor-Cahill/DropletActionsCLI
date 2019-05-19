@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"log"
 	"strconv"
 
@@ -29,6 +30,7 @@ var DeleteCmd = &cobra.Command{
 		if err != nil {
 			log.Fatalln("Error destroying your Digital Ocean Droplet: ", err)
 		}
+		fmt.Println("Droplet successfully deleted.")
 	},
 }
 
