@@ -31,7 +31,7 @@ func Index(client *godo.Client) ([]godo.Droplet, error) {
 // size: size / money of droplet
 // image: build of droplet
 // SSHKeys: what ssh keys will be configged with droplet
-func Create(client *godo.Client, name string) error {
+func Create(client *godo.Client, name string) (int, error) {
 
 	// uses Ubuntu Droplet image
 	image := godo.DropletCreateImage{
@@ -55,7 +55,7 @@ func Create(client *godo.Client, name string) error {
 	ctx := context.TODO()
 	keys, _, err := client.Keys.List(ctx, sshOpt)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	// list of SSH IDs to add to new droplet
@@ -78,12 +78,12 @@ func Create(client *godo.Client, name string) error {
 		Backups: false,
 	}
 
-	_, _, err = client.Droplets.Create(ctx, dropletRequest)
+	droplet, _, err := client.Droplets.Create(ctx, dropletRequest)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
-	return nil
+	return droplet.ID, nil
 }
 
 // Get returns existing droplet given droplet ID
