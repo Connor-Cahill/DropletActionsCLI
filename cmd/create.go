@@ -35,13 +35,9 @@ var CreateCmd = &cobra.Command{
 			log.Fatalln("Error returning new droplets IP")
 		}
 
-		// pass public IP to script to setup droplet with
-		// docker and docker-compose
-		err = dropletactions.DockerSetup(dropletIP)
-		if err != nil {
-			log.Fatalln("Error setting up docker on droplet: ", err)
-		}
-		fmt.Println("New droplet successfully created with docker and docker-compose installed.")
+		// Returns public ip for new droplet
+		fmt.Println("Successfully created new droplet, here is public IP: ", dropletIP)
+
 	},
 }
 
