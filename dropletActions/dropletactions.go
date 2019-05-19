@@ -2,6 +2,7 @@ package dropletactions
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/digitalocean/godo"
 )
@@ -83,10 +84,21 @@ func Create(client *godo.Client, name string) (string, error) {
 		return "", err
 	}
 
-	publicIP, err := droplet.PublicIPv4()
+	fmt.Println("DROPLET: ", droplet)
+	return "Droplet Created", nil
+}
+
+// Get returns existing droplet given droplet ID
+// Must pass in authenticated client
+func Get(client *godo.Client, id int) (*godo.Droplet, error) {
+	// create context for digital ocean request
+	ctx := context.TODO()
+
+	// Get existing droplet using id
+	droplet, _, err := client.Droplets.Get(ctx, id)
 	if err != nil {
-		return "", err
+		return &godo.Droplet{}, err
 	}
 
-	return publicIP, nil
+	return droplet, nil
 }
