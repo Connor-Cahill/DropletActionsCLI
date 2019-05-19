@@ -25,4 +25,5 @@ func main() {
 	if err != nil {
 		log.Fatalln("Error starting the CLI: ", err)
 	}
+
 }
