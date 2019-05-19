@@ -21,8 +21,6 @@ func Index(client *godo.Client) ([]godo.Droplet, error) {
 		return nil, err
 	}
 
-	// TODO: some sort of string formatting on this
-
 	return droplets, nil
 }
 
@@ -45,7 +43,7 @@ func Create(client *godo.Client, name string) (string, error) {
 	size := "s-1vcpu-1gb"
 
 	// currently have region set to SF2
-	region := "sf2"
+	region := "sfo2"
 
 	// NOTE: it currently connects all SSH keys on your account to the droplet
 	// I will fix this later but for right now this is how I use DO anyway
