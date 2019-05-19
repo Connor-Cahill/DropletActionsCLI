@@ -13,7 +13,7 @@ setupDroplet() {
         git clone $PROJECT $REPO_NAME
 }
 
-ssh root@VPS_IP 'bash -s' < setupDroplet()
+ssh root@VPS_IP 'bash -s' < setupDroplet
 
 
 
