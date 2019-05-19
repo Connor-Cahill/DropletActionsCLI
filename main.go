@@ -20,11 +20,8 @@ func init() {
     if err != nil {
         log.Fatalln("Error setting up env vars: ", err)
     }
+    fmt.Println("Loading vars")
 }
-
-// Digitial Ocean personal access token
-// Must put in .env to authenticate
-var doToken = os.Getenv("DIGITAL_OCEAN_KEY")
 
 // TokenSource source for digital ocean auth token
 type TokenSource struct {
@@ -43,11 +40,12 @@ func (t *TokenSource) Token() (*oauth2.Token, error) {
 
 func main() {
     // TokenSource for authenticating DO user
+    // note digital ocean PAT key must be in .env
     tokenSource := &TokenSource{
-        AccessToken: doToken,
+        AccessToken: os.Getenv("DIGITAL_OCEAN_KEY"),
     }
 
-    fmt.Println("DOToken: ", doToken)
+    fmt.Println("DOToken: ", os.Getenv("DIGITAL_OCEAN_KEY"))
 
     oauthClient := oauth2.NewClient(context.Background(), tokenSource)
     // this is the authenticated client
