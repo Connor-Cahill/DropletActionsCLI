@@ -19,11 +19,29 @@ var CreateCmd = &cobra.Command{
 		// get authenticated client to make droplet request
 		client := dockerauth.Auth()
 		dropletName := args[0]
-		newDroplet, err := dropletactions.Create(client, dropletName)
+		// creates new droplet and returns ID
+		dropletID, err := dropletactions.Create(client, dropletName)
 		if err != nil {
 			log.Fatalln("Error creating new Droplet: ", err)
 		}
-		fmt.Println("New Droplet IP: ", newDroplet)
+
+		droplet, err := dropletactions.Get(client, dropletID)
+		if err != nil {
+			log.Fatalln("Error returning freshly created droplet: ", err)
+		}
+		// gets droplets public ip address
+		dropletIP, err := droplet.PublicIPv4()
+		if err != nil {
+			log.Fatalln("Error returning new droplets IP")
+		}
+
+		// pass public IP to script to setup droplet with
+		// docker and docker-compose
+		err = dropletactions.DockerSetup(dropletIP)
+		if err != nil {
+			log.Fatalln("Error setting up docker on droplet: ", err)
+		}
+		fmt.Println("New droplet successfully created with docker and docker-compose installed.")
 	},
 }
 
