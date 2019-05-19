@@ -1,4 +1,4 @@
-package dockerauth
+package dropletauth
 
 import (
 	"context"
