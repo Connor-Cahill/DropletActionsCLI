@@ -102,6 +102,22 @@ func Get(client *godo.Client, id int) (*godo.Droplet, error) {
 	return droplet, nil
 }
 
+// Delete takes in authenticated digital ocean client
+// and droplet id and removes droplet
+func Delete(client *godo.Client, ID int) error {
+	// create context for droplet request
+	ctx := context.TODO()
+	// remove droplet using ID from args
+	_, err := client.Droplets.Delete(ctx, ID)
+	if err != nil {
+		return err
+	}
+
+	// droplet successfully deleted
+	// no error returned
+	return nil
+}
+
 // DockerSetup runs script to setup docker droplet with
 // docker and docker-compose CLI
 func DockerSetup(ip string) error {
