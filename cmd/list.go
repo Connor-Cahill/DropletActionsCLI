@@ -2,7 +2,10 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 
+	"github.com/connor-cahill/dropletAutomationCLI/dockerauth"
+	dropletactions "github.com/connor-cahill/dropletAutomationCLI/dropletActions"
 	"github.com/spf13/cobra"
 )
 
@@ -13,7 +16,14 @@ var ListCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List information about all your Docker Droplets",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Here is the args: ", args)
+		// get authenticated client to make droplet request
+		client := dockerauth.Auth()
+		droplets, err := dropletactions.Index(client)
+		if err != nil {
+			log.Fatalln("Error listing all Droplet information: ", err)
+		}
+
+		fmt.Println("Here are your droplets: ", droplets)
 
 	},
 }
