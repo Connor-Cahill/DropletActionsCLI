@@ -18,19 +18,20 @@ var DeleteCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		// Get authenticated client to make request
 		client := dockerauth.Auth()
-		// Droplet id passed in with args
-		dropletID := args[0]
-		// convert into int id
-		intID, err := strconv.Atoi(dropletID)
-		if err != nil {
-			log.Fatalln("Error converting ID argument to Int: ", err)
+
+		for _, dropletID := range args {
+			// convert into int id
+			intID, err := strconv.Atoi(dropletID)
+			if err != nil {
+				log.Fatalln("Error converting ID argument to Int: ", err)
+			}
+			// deletes the droplet
+			err = dropletactions.Delete(client, intID)
+			if err != nil {
+				log.Fatalln("Error destroying your Digital Ocean Droplet: ", err)
+			}
+			fmt.Println("Droplet successfully deleted.")
 		}
-		// deletes the droplet
-		err = dropletactions.Delete(client, intID)
-		if err != nil {
-			log.Fatalln("Error destroying your Digital Ocean Droplet: ", err)
-		}
-		fmt.Println("Droplet successfully deleted.")
 	},
 }
 
