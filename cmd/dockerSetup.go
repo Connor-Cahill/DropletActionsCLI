@@ -1,6 +1,9 @@
 package cmd
 
 import (
+	"fmt"
+	"log"
+
 	dropletactions "github.com/connor-cahill/dropletAutomationCLI/dropletActions"
 	"github.com/spf13/cobra"
 )
@@ -15,7 +18,13 @@ var SetupDockerCmd = &cobra.Command{
 
 		// get droplet public ip address from args
 		dropletIP := args[0]
-		dropletactions.DockerSetup(dropletIP)
+
+		err := dropletactions.DockerSetup(dropletIP)
+		if err != nil {
+			log.Fatalln("Error setting up Docker on Droplet: ", err)
+		}
+
+		fmt.Println("Docker & docker-compose setup on Droplet.")
 	},
 }
 
