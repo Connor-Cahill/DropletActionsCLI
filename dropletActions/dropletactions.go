@@ -167,3 +167,18 @@ func CopyEnv(pathToEnv string, ip string, dirName string) error {
     }
     return nil
 }
+
+// StartCompose will ssh into DO Droplet and run docker-compose up on repo
+// must give path to compose file for project as argument
+// and DO Droplet public IP
+func StartCompose(ip string, pathToCompose string) error {
+    // command to ssh into droplet and docker-compose up in the background
+    cmd := exec.Command("bash", "-c", "ssh root@"+ip+" 'cd "+pathToCompose+" && docker-compose up -d'")
+    // return ouput of command for debudding purposes
+    output, err := cmd.CombinedOutput()
+    if err != nil {
+        fmt.Println("Failed Script Output: ", output)
+        return err
+    }
+    return nil
+}
