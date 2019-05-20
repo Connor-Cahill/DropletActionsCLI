@@ -177,7 +177,7 @@ func StartCompose(ip string, pathToCompose string) error {
     // return ouput of command for debudding purposes
     output, err := cmd.CombinedOutput()
     if err != nil {
-        fmt.Println("Failed Script Output: ", output)
+        fmt.Println("Failed Script Output: ", string(output))
         return err
     }
     return nil
