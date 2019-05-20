@@ -126,19 +126,8 @@ func DockerSetup(ip string) error {
 	cmd := exec.Command("bash", "-c", "ssh root@"+ip+" 'curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh && apt-get update && apt-get install -y docker-compose'")
 	output, err := cmd.CombinedOutput()
 	if err != nil {
-		fmt.Println("Error Stuff: ", string(output))
+		fmt.Println("Error In Setup Script: ", string(output))
 		return err
 	}
-	return nil
-}
-
-// TestExec is for testing someting
-// TODO: Remove this function it is only for testing
-func TestExec() error {
-	filePath, err := exec.LookPath("fresh-docker-droplet.sh")
-	if err != nil {
-		return err
-	}
-	fmt.Println("PATH: ", filePath)
 	return nil
 }
