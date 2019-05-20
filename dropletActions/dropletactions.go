@@ -119,18 +119,18 @@ func Delete(client *godo.Client, ID int) error {
 	return nil
 }
 
-// SSHController controlls
-// where user can ssh
-type SSHController struct {
-	User string
-	IP   string
-}
-
 // DockerSetup runs script to setup docker droplet with
 // docker and docker-compose CLI
 func DockerSetup(ip string) error {
-	cmd := exec.Command("ssh", "root@"+ip+" 'bash -s' < curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh ")
-	err := cmd.Run()
+
+	// Get path to file (for some reason file must be in $PATH)
+	filePath, err := exec.LookPath("fresh-docker-droplet.sh")
+	if err != nil {
+		return err
+	}
+	// run script
+	cmd := exec.Command("sh", filePath, ip)
+	err = cmd.Run()
 	if err != nil {
 		return err
 	}
