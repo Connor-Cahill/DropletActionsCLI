@@ -182,3 +182,22 @@ func StartCompose(ip string, pathToCompose string) error {
     }
     return nil
 }
+
+// DownCompose works same as StartCompose but is used to 
+// stop running docker-compose instances
+// must pass Droplet public IP and pathToCompose as args
+func DownCompose(ip string, pathToCompose string) error {
+    // command to run docker-compose down on droplet
+    cmd := exec.Command("bash", "-c", "ssh root@"+ip+" 'cd "+pathToCompose+" && docker-compose down'")
+    // return out of command for debugging purposes
+    output, err := cmd.CombinedOutput()
+    if err != nil {
+        // TODO: these may be good error messages for end user
+        fmt.Println("Failed Script Output: ", output)
+        return err
+    }
+
+    // script was successful
+    return nil
+
+}
