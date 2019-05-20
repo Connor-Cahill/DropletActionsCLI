@@ -27,7 +27,7 @@ var GetProjectCmd = &cobra.Command{
 			log.Fatalln("Error setting up Docker on Droplet: ", err)
 		}
 
-		fmt.Println("Docker & docker-compose setup on Droplet.")
+		fmt.Println("Project: " + dirName + " now on Droplet.")
 	},
 }
 
