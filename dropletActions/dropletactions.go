@@ -142,12 +142,12 @@ func DockerSetup(ip string) error {
 // into on droplet
 func GetProject(ip string, projectLink string, dirName string) error {
 	// command to be executed
-	cmd := exec.Command("bash", "-c", "ssh root@"+ip+" 'cd && git clone"+projectLink+" "+dirName+"'")
+	cmd := exec.Command("bash", "-c", "ssh root@"+ip+" 'git clone"+" "+projectLink+" "+dirName+"'")
 	// returns complete output of command (for error debugging)
 	// TODO: change this to Run() when done debugging
 	output, err := cmd.CombinedOutput()
 	if err != nil {
-		fmt.Println("Error in bash script: ", output)
+		fmt.Println("Error in bash script: ", string(output))
 		return err
 	}
 	return nil
