@@ -20,7 +20,7 @@ var DownComposeCmd = &cobra.Command{
         pathToCompose := args[1]
 
         // run dropletactions command
-        err := dropletactions.StartCompose(dropletIP, pathToCompose)
+        err := dropletactions.DownCompose(dropletIP, pathToCompose)
         if err != nil {
             log.Fatalln("Error running commands on Droplet: ", err)
         }
