@@ -123,15 +123,10 @@ func Delete(client *godo.Client, ID int) error {
 // docker and docker-compose CLI
 func DockerSetup(ip string) error {
 
-	// Get path to file (for some reason file must be in $PATH)
-	filePath, err := exec.LookPath("fresh-docker-droplet.sh")
+	cmd := exec.Command("bash", "-c", "ssh root@"+ip+" 'curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh && apt-get update && apt-get install -y docker-compose'")
+	output, err := cmd.CombinedOutput()
 	if err != nil {
-		return err
-	}
-	// run script
-	cmd := exec.Command("sh", filePath, ip)
-	err = cmd.Run()
-	if err != nil {
+		fmt.Println("Error Stuff: ", string(output))
 		return err
 	}
 	return nil
