@@ -152,3 +152,18 @@ func GetProject(ip string, projectLink string, dirName string) error {
 	}
 	return nil
 }
+
+// CopyEnv secure copies your .env with environment vars into your DO Droplet
+// Must pass path to .env file as argument and DO Droplet IP
+func CopyEnv(pathToEnv string, ip string, dirName string) error {
+    // command to secure copy .env into VPS
+    cmd := exec.Command("bash", "-c", "scp "+pathToEnv+" root@"+ip+":$HOME/"+dirName)
+    // return output of command (error message included)
+    // using for debugging purposes
+    output, err := cmd.CombinedOutput()
+    if err != nil {
+        fmt.Println("Error copying over .env: ", string(output))
+        return err
+    }
+    return nil
+}
