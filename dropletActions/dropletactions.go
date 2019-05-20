@@ -122,11 +122,32 @@ func Delete(client *godo.Client, ID int) error {
 // DockerSetup runs script to setup docker droplet with
 // docker and docker-compose CLI
 func DockerSetup(ip string) error {
-
+	// runs small setup script while ssh'd into droplet to setup docker and docker-compose
 	cmd := exec.Command("bash", "-c", "ssh root@"+ip+" 'curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh && apt-get update && apt-get install -y docker-compose'")
+	// gathers output of command for error handling'
+	// TODO: handle errors gracefully later
 	output, err := cmd.CombinedOutput()
 	if err != nil {
 		fmt.Println("Error In Setup Script: ", string(output))
+		return err
+	}
+	// no error
+	return nil
+}
+
+// GetProject will clone project onto DO Droplet
+// must pass in droplet public IP address and
+// github clone link for project repo
+// And dirName which is directory project will be cloned
+// into on droplet
+func GetProject(ip string, projectLink string, dirName string) error {
+	// command to be executed
+	cmd := exec.Command("bash", "-c", "ssh root@"+ip+" 'cd && git clone"+projectLink+" "+dirName+"'")
+	// returns complete output of command (for error debugging)
+	// TODO: change this to Run() when done debugging
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		fmt.Println("Error in bash script: ", output)
 		return err
 	}
 	return nil
