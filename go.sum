@@ -1,4 +1,6 @@
 cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
+github.com/connor-cahill/dropletAutomationCLI v0.0.0-20190520202000-cc4d3723ac62 h1:40aIQZCBiv+pbQ6+2yEXr6FbckImeaRNLsADKr4y/Bk=
+github.com/connor-cahill/dropletAutomationCLI v0.0.0-20190520202000-cc4d3723ac62/go.mod h1:QMln7rue01rqEZlJKedapju2dXBViMbGww9wpqUo9zs=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/digitalocean/godo v1.14.0 h1:x/Ecu4wpLAXIujhZJk8OP7fAb2uIuk13AeUhBYDPKJo=

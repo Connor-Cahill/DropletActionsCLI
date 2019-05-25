@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	dropletactions "github.com/connor-cahill/dropletAutomationCLI/dropletActions"
+	dropletactions "github.com/connor-cahill/dropletActionsCLI/dropletActions"
 	"github.com/spf13/cobra"
 )
 
