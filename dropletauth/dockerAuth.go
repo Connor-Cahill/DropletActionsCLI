@@ -3,6 +3,7 @@ package dropletauth
 import (
 	"context"
 	"os"
+	"flag"
 
 	"github.com/digitalocean/godo"
 	"golang.org/x/oauth2"
@@ -12,6 +13,17 @@ import (
 // Digital Ocean Personal Access Token
 type TokenSource struct {
 	AccessToken string
+}
+
+
+// GetToken will get token from Command line input and set env
+func GetToken() { 
+    // set flags to take input of DO API Key
+    // default value is empty string ("")
+    DOKey := flag.String("DOKey", "", "Digital Ocean API Key")
+    flag.Parse()
+    // sets inputted digital ocean API Key to env vars
+    os.Setenv("DIGITAL_OCEAN_KEY", *DOKey)
 }
 
 // Token Auth setup taken from docs
