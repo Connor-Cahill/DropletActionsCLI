@@ -8,7 +8,6 @@ import (
 
 // create name key for out bucket
 var authBucket = []byte("users")
-var doTokenBucket = []byte("tokens")
 var db *bolt.DB
 
 // User is the struct
@@ -35,3 +34,7 @@ func InitDB(dbPath string) error {
     })
 }
 
+
+// SetJWTToken takes response from Authentication API and stores the
+// JWT Token in the Bolt db to stay authenticated
+// func SetJWTToken() error {}
