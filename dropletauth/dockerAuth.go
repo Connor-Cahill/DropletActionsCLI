@@ -3,6 +3,7 @@ package dropletauth
 import (
 	"context"
 	"os"
+	"errors"
 	"fmt"
 	"bufio"
 
@@ -29,6 +30,47 @@ func GetToken() error {
     // sets inputted digital ocean API Key to env vars
     os.Setenv("DIGITAL_OCEAN_KEY", key)
     return nil
+}
+
+
+// SignUp gets users credentials for signing up
+// returns Map or string string key, value pair
+// to send with request body to Auth API
+func SignUp() (map[string]string, error) {
+    // create new reader to get Stdin
+    reader := bufio.NewReader(os.Stdin)
+    // ask user for email to sign up
+    fmt.Println("Please Enter An Email: ")
+    email, err := reader.ReadString('\n')
+    if err != nil {
+        return nil, err
+    }
+    // ask user for a password
+    fmt.Println("Please Enter A Password: ")
+    password, err := reader.ReadString('\n')
+    if err != nil {
+        return nil, err
+    }
+    // ask user for confirmation password
+    fmt.Println("Confirm Your Password: ")
+    confirmPassword, err := reader.ReadString('\n')
+    if err != nil {
+        return nil, err
+    }
+    
+    // make sure passwords matchup
+    if password != confirmPassword {
+        return nil, errors.New("the passwords you entered did not match up")
+    }
+
+    // build return map
+    credentialsMap := map[string]string{
+        "email": email,
+        "password": password,
+    }
+
+    // return the credentials map
+    return credentialsMap, nil
 }
 
 // Token Auth setup taken from docs
