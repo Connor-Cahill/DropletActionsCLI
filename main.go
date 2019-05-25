@@ -8,8 +8,8 @@ import (
 
 	"github.com/connor-cahill/dropletActionsCLI/cmd"
 	"github.com/joho/godotenv"
+	"github.com/connor-cahill/dropletActionsCLI/db"
 	"github.com/connor-cahill/dropletActionsCLI/dropletauth"
-	"github.com/boltdb/bolt"
 	homedir "github.com/mitchellh/go-homedir"
 )
 
@@ -32,7 +32,11 @@ func main() {
 
     // set path to db in users home dir
     dbPath := filepath.Join(home, "dropletActions.db")
-
+    // use db package to open database connection
+    err = db.InitDB(dbPath)
+    if err != nil {
+        log.Fatalln("Error establishing connection to database: ", err)
+    }
 
     // if no DO API Key set ask for it
     if os.Getenv("DIGITAL_OCEAN_KEY") == "" {
@@ -42,7 +46,6 @@ func main() {
     }
 	// Execute the CLI package
 	// and mount the root command
-	// TODO: how can I pass the client obj to the CLI?
 	err = cmd.RootCmd.Execute()
 	if err != nil {
 		log.Fatalln("Error starting the CLI: ", err)
