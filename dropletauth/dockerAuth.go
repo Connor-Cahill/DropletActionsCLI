@@ -73,6 +73,33 @@ func SignUp() (map[string]string, error) {
     return credentialsMap, nil
 }
 
+// SignIn gets users email and password from CLI 
+// and returns in map to be sent to node auth api
+// and authenticate user
+func SignIn() (map[string]string, error) {
+    // create reader to parse CLI parameters
+    reader := bufio.NewReader(os.Stdin)
+    // ask user for email
+    fmt.Println("Please enter your email: ")
+    email, err := reader.ReadString('\n')
+    if err != nil {
+        return nil, err
+    }
+    // ask user for password
+    fmt.Println("Please enter your password: ")
+    password, err := reader.ReadString('\n')
+    if err != nil {
+        return nil, err
+    }
+    // buildout the credential map
+    credentialsMap := map[string]string{
+        "email": email,
+        "password": password,
+    }
+    // return credentials map
+    return credentialsMap, nil
+}
+
 // Token Auth setup taken from docs
 // https://github.com/digitalocean/godo
 // auths user using digital ocean access token
