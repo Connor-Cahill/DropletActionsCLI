@@ -1,7 +1,6 @@
 package db
 
 import (
-    "encoding/binary"
 	"time"
 
     "github.com/boltdb/bolt"
