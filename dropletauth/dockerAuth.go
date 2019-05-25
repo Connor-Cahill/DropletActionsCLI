@@ -3,7 +3,8 @@ package dropletauth
 import (
 	"context"
 	"os"
-	"flag"
+	"fmt"
+	"bufio"
 
 	"github.com/digitalocean/godo"
 	"golang.org/x/oauth2"
@@ -17,13 +18,17 @@ type TokenSource struct {
 
 
 // GetToken will get token from Command line input and set env
-func GetToken() { 
-    // set flags to take input of DO API Key
-    // default value is empty string ("")
-    DOKey := flag.String("DOKey", "", "Digital Ocean API Key")
-    flag.Parse()
+func GetToken() error { 
+    reader := bufio.NewReader(os.Stdin)
+    // Ask user for Digital Ocean Key
+    fmt.Println("Input Digital Ocean API Key: ")
+    key, err := reader.ReadString('\n')
+    if err != nil {
+        return err
+    }
     // sets inputted digital ocean API Key to env vars
-    os.Setenv("DIGITAL_OCEAN_KEY", *DOKey)
+    os.Setenv("DIGITAL_OCEAN_KEY", key)
+    return nil
 }
 
 // Token Auth setup taken from docs
